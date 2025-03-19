@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Admin Panel</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h1>News Admin</h1>
+            <ul>
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#news">Manage News</a></li>
+                <li><a href="#users">Users</a></li>
+                <li><a href="#categories">Categories</a></li>
+                <li><a href="#logs">System Logs</a></li>
+            </ul>
+        </aside>
+        
+        <!-- Main Content -->
+        <main>
+            <section id="dashboard">
+                <h2>Dashboard</h2>
+                <div class="stats">
+                    <div class="stat-box">Total News: <span id="newsCount">120</span></div>
+                    <div class="stat-box">Total Users: <span id="userCount">300</span></div>
+                    <div class="stat-box">Categories: <span id="categoryCount">10</span></div>
+                </div>
+            </section>
+            
+            <section id="news">
+                <h2>Manage News</h2>
+                <button onclick="openModal('newsModal')">Add News</button>
+                <ul id="newsList"></ul>
+            </section>
+            
+            <section id="users">
+                <h2>Users</h2>
+                <button onclick="openModal('userModal')">Add User</button>
+                <ul id="userList"></ul>
+            </section>
+            
+            <section id="categories">
+                <h2>Categories</h2>
+                <button onclick="openModal('categoryModal')">Add Category</button>
+                <ul id="categoryList"></ul>
+            </section>
+            
+            <section id="logs">
+                <h2>System Logs</h2>
+                <ul id="logList"></ul>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="newsModal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Add News</h3>
+            <input type="text" id="newsTitle" placeholder="News Title">
+            <button onclick="addNews()">Submit</button>
+            <button onclick="closeModal('newsModal')">Cancel</button>
+        </div>
+    </div>
+    
+    <div id="userModal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Add User</h3>
+            <input type="text" id="userName" placeholder="User Name">
+            <button onclick="addUser()">Submit</button>
+            <button onclick="closeModal('userModal')">Cancel</button>
+        </div>
+    </div>
+    
+    <div id="categoryModal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Add Category</h3>
+            <input type="text" id="categoryName" placeholder="Category Name">
+            <button onclick="addCategory()">Submit</button>
+            <button onclick="closeModal('categoryModal')">Cancel</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
