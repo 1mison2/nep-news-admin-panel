@@ -1,52 +1,44 @@
-// Open Modal
-function openModal(id) {
-    document.getElementById(id).classList.remove("hidden");
+function showSection(sectionId) {
+    document.querySelectorAll('.section').forEach(section => {
+        section.classList.remove('active');
+    });
+    document.getElementById(sectionId).classList.add('active');
 }
 
-// Close Modal
-function closeModal(id) {
-    document.getElementById(id).classList.add("hidden");
+function openModal(modalId) {
+    document.getElementById(modalId).classList.remove('hidden');
 }
 
-// Add News
+function closeModal(modalId) {
+    document.getElementById(modalId).classList.add('hidden');
+}
+
 function addNews() {
-    let title = document.getElementById("newsTitle").value;
-    let content = document.getElementById("newsContent").value;
-
-    if (title && content) {
-        let newsList = document.getElementById("newsList");
-        let item = document.createElement("div");
-        item.innerHTML = `${title} - ${content} 
-            <button onclick="deleteItem(this)">Delete</button>`;
-        newsList.appendChild(item);
+    let title = document.getElementById('newsTitle').value;
+    if (title) {
+        let newsList = document.getElementById('newsList');
+        let li = document.createElement('li');
+        li.textContent = title;
+        newsList.appendChild(li);
         
-        // Update Count
-        let count = document.getElementById("newsCount");
-        count.textContent = parseInt(count.textContent) + 1;
-
-        closeModal("newsModal");
+        let newsCount = document.getElementById('newsCount');
+        newsCount.textContent = parseInt(newsCount.textContent) + 1;
+        
+        closeModal('newsModal');
     }
 }
 
-// Add Category
-function addCategory() {
-    let name = document.getElementById("categoryName").value;
-
-    if (name) {
-        let categoryList = document.getElementById("categoryList");
-        let item = document.createElement("div");
-        item.innerHTML = `${name} <button onclick="deleteItem(this)">Delete</button>`;
-        categoryList.appendChild(item);
+function addAd() {
+    let title = document.getElementById('adsTitle').value;
+    if (title) {
+        let adsList = document.getElementById('adsList');
+        let li = document.createElement('li');
+        li.textContent = title;
+        adsList.appendChild(li);
         
-        // Update Count
-        let count = document.getElementById("categoryCount");
-        count.textContent = parseInt(count.textContent) + 1;
-
-        closeModal("categoryModal");
+        let adsCount = document.getElementById('adsCount');
+        adsCount.textContent = parseInt(adsCount.textContent) + 1;
+        
+        closeModal('adsModal');
     }
-}
-
-// Delete Item
-function deleteItem(btn) {
-    btn.parentElement.remove();
 }
