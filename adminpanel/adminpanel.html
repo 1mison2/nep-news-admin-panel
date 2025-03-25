@@ -7,50 +7,61 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div class="admin-container">
+        <aside class="sidebar">
+            <h1 class="logo">News Admin</h1>
+            <nav>
+                <ul>
+                    <li><a href="#" onclick="showSection('dashboard')">Dashboard</a></li>
+                    <li><a href="#" onclick="showSection('manageNews')">Manage News</a></li>
+                    <li><a href="#" onclick="showSection('categories')">News Categories</a></li>
+                    <li><a href="#" onclick="showSection('advertisements')">Advertisements</a></li>
+                    <li><a href="#" onclick="showSection('logs')">System Logs</a></li>
+                </ul>
+            </nav>
+        </aside>
 
-    <!-- Sidebar -->
-    <aside class="sidebar">
-        <h1 class="logo">News Admin</h1>
-        <nav>
-            <ul>
-                <li><a href="#" onclick="showSection('dashboard')">Dashboard</a></li>
-                <li><a href="#" onclick="showSection('news')">Manage News</a></li>
-                <li><a href="#" onclick="showSection('ads')">Manage Ads</a></li>
-                <li><a href="#" onclick="showSection('logs')">System Logs</a></li>
-            </ul>
-        </nav>
-    </aside>
+        <main class="main-content">
+            <!-- Dashboard Section -->
+            <section id="dashboard">
+                <h2>Dashboard</h2>
+                <div class="stats">
+                    <div>Total News: <span id="newsCount">0</span></div>
+                    <div>Categories: <span id="categoryCount">0</span></div>
+                    <div>Ad Revenue: $<span id="adRevenue">0</span></div>
+                </div>
+            </section>
 
-    <!-- Main Content -->
-    <main class="content">
-        <section id="dashboard" class="section active">
-            <h2>Dashboard</h2>
-            <div class="stats">
-                <div>Total News: <span id="newsCount">0</span></div>
-                <div>Active Ads: <span id="adsCount">0</span></div>
-                <div>System Logs: <span id="logsCount">0</span></div>
-            </div>
-        </section>
+            <!-- Manage News Section -->
+            <section id="manageNews" class="hidden">
+                <h2>Manage News</h2>
+                <button onclick="openModal('newsModal')">Add News</button>
+                <ul id="newsList"></ul>
+            </section>
 
-        <section id="news" class="section">
-            <h2>Manage News</h2>
-            <button onclick="openModal('newsModal')">Add News</button>
-            <ul id="newsList"></ul>
-        </section>
+            <!-- Categories Section -->
+            <section id="categories" class="hidden">
+                <h2>News Categories</h2>
+                <button onclick="openModal('categoryModal')">Add Category</button>
+                <ul id="categoryList"></ul>
+            </section>
 
-        <section id="ads" class="section">
-            <h2>Manage Advertisements</h2>
-            <button onclick="openModal('adsModal')">Add Ad</button>
-            <ul id="adsList"></ul>
-        </section>
+            <!-- Advertisements Section -->
+            <section id="advertisements" class="hidden">
+                <h2>Manage Advertisements</h2>
+                <button onclick="openModal('adModal')">Add Advertisement</button>
+                <ul id="adList"></ul>
+            </section>
 
-        <section id="logs" class="section">
-            <h2>System Logs</h2>
-            <ul id="logsList"></ul>
-        </section>
-    </main>
+            <!-- System Logs Section -->
+            <section id="logs" class="hidden">
+                <h2>System Logs</h2>
+                <p>Logs will appear here...</p>
+            </section>
+        </main>
+    </div>
 
-    <!-- Modals -->
+    <!-- News Modal -->
     <div id="newsModal" class="modal hidden">
         <div class="modal-content">
             <h3>Add News</h3>
@@ -60,12 +71,23 @@
         </div>
     </div>
 
-    <div id="adsModal" class="modal hidden">
+    <!-- Category Modal -->
+    <div id="categoryModal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Add Category</h3>
+            <input type="text" id="categoryName" placeholder="Category Name">
+            <button onclick="addCategory()">Submit</button>
+            <button onclick="closeModal('categoryModal')">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Advertisement Modal -->
+    <div id="adModal" class="modal hidden">
         <div class="modal-content">
             <h3>Add Advertisement</h3>
-            <input type="text" id="adsTitle" placeholder="Ad Title">
+            <input type="text" id="adTitle" placeholder="Ad Title">
             <button onclick="addAd()">Submit</button>
-            <button onclick="closeModal('adsModal')">Cancel</button>
+            <button onclick="closeModal('adModal')">Cancel</button>
         </div>
     </div>
 
