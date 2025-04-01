@@ -1,89 +1,108 @@
-function showSection(sectionId) {
-    document.querySelectorAll("main section").forEach(section => {
-        section.classList.add("hidden");
+function navigate(page) {
+    let content = document.getElementById("content");
+
+    if (page === "dashboard") {
+        content.innerHTML = `<h2>Dashboard</h2><p>Welcome to the News Admin Panel!</p>`;
+    } 
+    
+    else if (page === "news") {
+        content.innerHTML = `
+            <h2>Manage News</h2>
+            <button class="add-btn" onclick="addNews()">+ Add News</button>
+            <div id="newsContainer"></div>
+        `;
+        loadNews();
+    } 
+    
+    else if (page === "categories") {
+        content.innerHTML = `
+            <h2>News Categories</h2>
+            <button class="add-btn" onclick="addCategory()">+ Add Category</button>
+            <div id="categoryContainer"></div>
+        `;
+        loadCategories();
+    } 
+    
+    else if (page === "ads") {
+        content.innerHTML = `
+            <h2>Manage Advertisements</h2>
+            <button class="add-btn" onclick="addAd()">+ Add Advertisement</button>
+            <div id="adsContainer"></div>
+        `;
+        loadAds();
+    } 
+    
+    else if (page === "logs") {
+        content.innerHTML = `<h2>System Logs</h2><div id="logContainer"></div>`;
+        loadLogs();
+    }
+}
+
+// Load News
+function loadNews() {
+    let newsContainer = document.getElementById("newsContainer");
+    newsContainer.innerHTML = "";
+
+    let newsData = JSON.parse(localStorage.getItem("news")) || [];
+
+    newsData.forEach((news, index) => {
+        let newsItem = document.createElement("div");
+        newsItem.classList.add("news-item");
+        newsItem.innerHTML = `
+            <img src="${news.image}" class="news-img">
+            <div>
+                <h3>${news.title}</h3>
+                <p>${news.category} | ${news.date}</p>
+            </div>
+            <div>
+                <button class="delete-btn" onclick="deleteNews(${index})">Delete</button>
+                <button class="post-btn" onclick="postNews(${index})">Post</button>
+            </div>
+        `;
+        newsContainer.appendChild(newsItem);
     });
-    document.getElementById(sectionId).classList.remove("hidden");
 }
 
-function openModal(modalId) {
-    document.getElementById(modalId).classList.remove("hidden");
-}
-
-function closeModal(modalId) {
-    document.getElementById(modalId).classList.add("hidden");
-}
-
+// Add News
 function addNews() {
-    let title = document.getElementById('newsTitle').value;
-    if (title) {
-        let newsList = document.getElementById('newsList');
-        let newItem = document.createElement('li');
-        newItem.innerHTML = `${title} 
-            <button onclick="editNews(this)">Edit</button>
-            <button onclick="deleteItem(this)">Delete</button>
-            <button onclick="postNews(this)">Post</button>`;
-        newsList.appendChild(newItem);
-        document.getElementById('newsCount').textContent++;
-        closeModal('newsModal');
+    let newsData = JSON.parse(localStorage.getItem("news")) || [];
+    let newTitle = prompt("Enter news title:");
+    let newCategory = prompt("Enter category:");
+    let newDate = new Date().toLocaleDateString();
+    let newImage = prompt("Enter image URL:");
+
+    if (newTitle) {
+        newsData.push({ title: newTitle, category: newCategory, date: newDate, image: newImage });
+        localStorage.setItem("news", JSON.stringify(newsData));
+        logAction(`News added: ${newTitle}`);
+        loadNews();
     }
 }
 
-function addCategory() {
-    let category = document.getElementById('categoryName').value;
-    if (category) {
-        let categoryList = document.getElementById('categoryList');
-        let newItem = document.createElement('li');
-        newItem.innerHTML = `${category} 
-            <button onclick="editCategory(this)">Edit</button>
-            <button onclick="deleteItem(this)">Delete</button>`;
-        categoryList.appendChild(newItem);
-        document.getElementById('categoryCount').textContent++;
-        closeModal('categoryModal');
-    }
+// Delete News
+function deleteNews(index) {
+    let newsData = JSON.parse(localStorage.getItem("news")) || [];
+    logAction(`News deleted: ${newsData[index].title}`);
+    newsData.splice(index, 1);
+    localStorage.setItem("news", JSON.stringify(newsData));
+    loadNews();
 }
 
-function addAd() {
-    let adTitle = document.getElementById('adTitle').value;
-    if (adTitle) {
-        let adList = document.getElementById('adList');
-        let newItem = document.createElement('li');
-        newItem.innerHTML = `${adTitle} 
-            <button onclick="approveAd(this)">Approve</button>
-            <button onclick="removeAd(this)">Remove</button>
-            <button onclick="trackAdPerformance()">Track Performance</button>`;
-        adList.appendChild(newItem);
-        document.getElementById('adRevenue').textContent = 
-            (parseFloat(document.getElementById('adRevenue').textContent) + 50).toFixed(2);
-        closeModal('adModal');
-    }
+// Approve or Reject Ad
+function approveAd(index) {
+    logAction(`Advertisement approved.`);
+}
+function rejectAd(index) {
+    logAction(`Advertisement rejected.`);
 }
 
-function deleteItem(button) {
-    button.parentElement.remove();
+// System Logs
+function logAction(action) {
+    let logs = JSON.parse(localStorage.getItem("logs")) || [];
+    logs.push({ action: action, timestamp: new Date().toLocaleString() });
+    localStorage.setItem("logs", JSON.stringify(logs));
 }
-
-function editNews(button) {
-    let newTitle = prompt("Edit News Title:", button.parentElement.firstChild.textContent);
-    if (newTitle) button.parentElement.firstChild.textContent = newTitle;
-}
-
-function postNews(button) {
-    alert("News posted successfully!");
-}
-
-function editCategory(button) {
-    let newCategory = prompt("Edit Category Name:", button.parentElement.firstChild.textContent);
-    if (newCategory) button.parentElement.firstChild.textContent = newCategory;
-}
-
-function approveAd(button) {
-    alert("Ad approved!");
-}
-
-function removeAd(button) {
-    button.parentElement.remove();
-}
-
-function trackAdPerformance() {
-    alert("Tracking ad performance...");
+function loadLogs() {
+    let logContainer = document.getElementById("logContainer");
+    logContainer.innerHTML = JSON.parse(localStorage.getItem("logs")).map(log => `<p>${log.timestamp}: ${log.action}</p>`).join("");
 }

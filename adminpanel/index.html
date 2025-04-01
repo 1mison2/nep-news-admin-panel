@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Admin Panel</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h1 class="logo">News Admin</h1>
+            <nav>
+                <ul>
+                    <li><a href="#" onclick="navigate('dashboard')">Dashboard</a></li>
+                    <li><a href="#" onclick="navigate('news')">Manage News</a></li>
+                    <li><a href="#" onclick="navigate('categories')">News Categories</a></li>
+                    <li><a href="#" onclick="navigate('ads')">Manage Advertisements</a></li>
+                    <li><a href="#" onclick="navigate('logs')">System Logs</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main id="content">
+            <h2>Welcome to the News Admin Panel!</h2>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

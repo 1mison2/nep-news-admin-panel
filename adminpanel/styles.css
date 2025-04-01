@@ -1,3 +1,10 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f5f5f5;
+}
+
 .admin-container {
     display: flex;
 }
@@ -25,6 +32,37 @@
 .main-content {
     flex-grow: 1;
     padding: 20px;
+}
+
+/* News Feed Styling */
+.news-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* News Card */
+.news-card {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.news-card img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.news-card .news-meta {
+    font-size: 12px;
+    color: gray;
+    margin: 5px 0;
+}
+
+.news-card h3 {
+    font-size: 16px;
+    margin: 5px 0;
 }
 
 .hidden {
